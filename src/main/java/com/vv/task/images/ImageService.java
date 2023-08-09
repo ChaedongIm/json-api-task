@@ -17,7 +17,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -55,6 +54,7 @@ public class ImageService {
         if (!statusCode.is2xxSuccessful()) {
             throw new HttpServerErrorException(statusCode);
         }
+
         List<Image> images = getImagesFromResponse(response);
         imageRepository.saveAll(images);
 
@@ -63,22 +63,21 @@ public class ImageService {
 
     private List<Image> getImagesFromResponse(ResponseEntity<JsonNode> response) {
         List<Image> images = new ArrayList<>();
-        Iterator<JsonNode> iter = response
-                .getBody()
+        response.getBody()
                 .get("response")
                 .get("body")
                 .get("items")
                 .get("item")
-                .iterator();
-        while (iter.hasNext()) {
-            JsonNode next = iter.next();
-            try {
-                Image image = Image.from(objectMapper.treeToValue(next, ImageResponseDto.class));
-                images.add(image);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+                .iterator()
+                .forEachRemaining(node -> {
+                    try {
+                        ImageResponseDto imageDto = objectMapper.treeToValue(node, ImageResponseDto.class);
+                        images.add(Image.from(imageDto));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+
         return images;
     }
 }
