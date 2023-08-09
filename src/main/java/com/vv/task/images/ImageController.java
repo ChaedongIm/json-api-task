@@ -1,6 +1,6 @@
 package com.vv.task.images;
 
-import com.vv.task.model.CommonResponse;
+import com.vv.task.common.CommonResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,9 +13,6 @@ public class ImageController {
 
     @GetMapping("/api/v1/images")
     public CommonResponse<Object> getHello() {
-        var data = imageService.get();
-        
-        return CommonResponse.success(data);
+        return CommonResponse.success(imageService.getImageList());
     }
-
 }
