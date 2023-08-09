@@ -1,4 +1,4 @@
-package com.vv.task.model;
+package com.vv.task.common;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
