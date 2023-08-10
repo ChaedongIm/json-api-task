@@ -7,8 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 
 import java.util.Optional;
 
@@ -31,6 +29,12 @@ class ImageServiceTest {
             .galPhotographer("photoGrapher")
             .galWebImageUrl("http://www.url.com/test")
             .galTitle("title")
+            .build();
+    ImageResponseDto selectedResponseDto = ImageResponseDto.builder()
+            .galContentId(123L)
+            .galPhotographer("selectedPhotoGrapher")
+            .galWebImageUrl("http://www.url.com/test/selected")
+            .galTitle("selectedTitle")
             .build();
 
     @Test
@@ -56,7 +60,6 @@ class ImageServiceTest {
     void create_테스트() throws Exception {
         // given
         Image image = Image.from(requestDto);
-
         given(imageRepository.save(any()))
                 .willReturn(image);
 
@@ -70,5 +73,22 @@ class ImageServiceTest {
         assertEquals(imageResponseDto.getGalWebImageUrl(), requestDto.getGalWebImageUrl());
 
         verify(imageRepository).save(any());
+    }
+
+    @Test
+    void update_테스트() throws Exception {
+        // given
+        Image selectedImage = Image.from(selectedResponseDto);
+        given(imageRepository.findByContentId(123L))
+                .willReturn(Optional.of(selectedImage));
+
+        // when
+        ImageResponseDto imageResponseDto = imageService.update(123L, requestDto);
+
+        // then
+        assertEquals(imageResponseDto.getGalContentId(), requestDto.getGalContentId());
+        assertEquals(imageResponseDto.getGalTitle(), requestDto.getGalTitle());
+        assertEquals(imageResponseDto.getGalPhotographer(), requestDto.getGalPhotographer());
+        assertEquals(imageResponseDto.getGalWebImageUrl(), requestDto.getGalWebImageUrl());
     }
 }
