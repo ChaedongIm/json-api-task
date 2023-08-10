@@ -50,6 +50,23 @@ public class Image {
     public static Image from(ImageResponseDto dto) {
         return new Image(dto);
     }
+
+    private Image(ImageRequestDto dto) {
+        this.contentId = dto.getGalContentId();
+        this.contentTypeId = dto.getGalContentId();
+        this.title = dto.getGalTitle();
+        this.imageUrl = dto.getGalWebImageUrl();
+        this.createdTime = dto.getGalCreatedtime();
+        this.modifiedTime = dto.getGalCreatedtime();
+        this.photographyMonth = dto.getGalPhotographyMonth();
+        this.photographyLocation = dto.getGalPhotographyLocation();
+        this.photographer = dto.getGalPhotographer();
+        this.searchKeyword = dto.getGalSearchKeyword();
+    }
+
+    public static Image from(ImageRequestDto dto) {
+        return new Image(dto);
+    }
 }
 
 

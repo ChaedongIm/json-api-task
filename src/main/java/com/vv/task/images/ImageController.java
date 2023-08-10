@@ -24,5 +24,9 @@ public class ImageController {
         return CommonResponse.success(imageService.findAll(pageable));
     }
 
+    @PostMapping("/api/v1/images")
+    public CommonResponse<?> saveImage(@Validated @RequestBody ImageRequestDto requestDto) {
+        return CommonResponse.success(imageService.create(requestDto));
+    }
 
 }

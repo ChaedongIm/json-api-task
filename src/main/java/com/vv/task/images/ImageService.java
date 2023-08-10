@@ -1,5 +1,7 @@
 package com.vv.task.images;
 
+import com.vv.task.images.model.Image;
+import com.vv.task.images.model.ImageRequestDto;
 import com.vv.task.images.model.ImageResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -7,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 
 @RequiredArgsConstructor
@@ -28,8 +31,13 @@ public class ImageService {
     }
 
     @Transactional
-    public ImageResponseDto create() {
-        return null;
+    public ImageResponseDto create(ImageRequestDto requestDto) {
+        if (imageRepository.findByContentId(requestDto.getGalContentId()).isPresent()) {
+            throw new EntityExistsException();
+        }
+
+        Image image = imageRepository.save(Image.from(requestDto));
+        return ImageResponseDto.from(image);
     }
 
     @Transactional
