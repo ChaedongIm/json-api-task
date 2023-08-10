@@ -6,8 +6,8 @@
     - [x] 해당 데이터(모델)에 대한 REST API 를 제공하는 서버 구축
     - [ ] 전반적인 REST API 동작을 체크할 수 있는 테스트 소스 구현
         - [x] Controller Test
-        - [ ] Service Test
-        - [ ] Domain Test
+        - [x] Service Test
+        - [x] Domain Test
     - [ ] (선택) jpa specification 기반의 확장 용이한 검색 등 임의의 추가 기능
 
 ## 구현 중 만난 문제, 해결
