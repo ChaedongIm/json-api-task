@@ -1,11 +1,11 @@
 package com.vv.task.images;
 
 import com.vv.task.common.CommonResponse;
+import com.vv.task.images.model.ImageRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 
 @RequiredArgsConstructor
@@ -27,6 +27,12 @@ public class ImageController {
     @PostMapping("/api/v1/images")
     public CommonResponse<?> saveImage(@Validated @RequestBody ImageRequestDto requestDto) {
         return CommonResponse.success(imageService.create(requestDto));
+    }
+
+    @PutMapping("/api/v1/images/{galContentId}")
+    public CommonResponse<?> updateImage(@PathVariable Long galContentId,
+                                         @Validated @RequestBody ImageRequestDto requestDto) {
+        return CommonResponse.success(imageService.update(requestDto));
     }
 
 }

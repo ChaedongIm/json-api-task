@@ -67,6 +67,19 @@ public class Image {
     public static Image from(ImageRequestDto dto) {
         return new Image(dto);
     }
+
+    public Image update(ImageRequestDto dto) {
+        this.contentTypeId = dto.getGalContentId();
+        this.title = dto.getGalTitle();
+        this.imageUrl = dto.getGalWebImageUrl();
+        this.modifiedTime = dto.getGalModifiedtime();
+        this.photographyMonth = dto.getGalPhotographyMonth();
+        this.photographyLocation = dto.getGalPhotographyLocation();
+        this.photographer = dto.getGalPhotographer();
+        this.searchKeyword = dto.getGalSearchKeyword();
+
+        return this;
+    }
 }
 
 

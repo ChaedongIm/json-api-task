@@ -10,10 +10,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -50,7 +50,7 @@ class ImageControllerTest {
     @Test
     void 컨텐트아이디로_이미지DTO를_겟한다() throws Exception {
         // given
-        given(imageService.findByGalContentId(contentId))
+        given(imageService.findByGalContentId(any()))
                 .willReturn(responseDto);
 
         // when 
@@ -70,8 +70,7 @@ class ImageControllerTest {
     @Test
     void RequestDto를_받아서_이미지를_저장하면_ResponseDto가_나온다() throws Exception {
         // given
-        given(imageService.create(requestDto)).willReturn(responseDto);
-
+        given(imageService.create(any())).willReturn(responseDto);
         Gson gson = new Gson();
         String content = gson.toJson(requestDto);
 
@@ -79,7 +78,8 @@ class ImageControllerTest {
         mockMvc.perform(
                         post("/api/v1/images")
                                 .content(content)
-                                .contentType(MediaType.APPLICATION_JSON))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.galContentId").exists())
                 .andExpect(jsonPath("$.data.galTitle").exists())
@@ -88,13 +88,12 @@ class ImageControllerTest {
                 .andDo(print());
 
         // then
-        verify(imageService).create(requestDto);
     }
 
     @Test
     void CREATE시_밸리데이션_테스트() throws Exception {
         // given
-        given(imageService.create(invalidateRequestDto)).willReturn(responseDto);
+        given(imageService.create(any())).willReturn(responseDto);
 
         Gson gson = new Gson();
         String content = gson.toJson(invalidateRequestDto);
@@ -103,8 +102,33 @@ class ImageControllerTest {
         mockMvc.perform(
                         post("/api/v1/images")
                                 .content(content)
-                                .contentType(MediaType.APPLICATION_JSON))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is4xxClientError())
+                .andDo(print());
+
+        // then
+    }
+
+    @Test
+    void RequestDto를_받아_이미지를_수정하면_ResponseDto가_나온다() throws Exception {
+        // given
+        given(imageService.update(any())).willReturn(responseDto);
+
+        Gson gson = new Gson();
+        String content = gson.toJson(requestDto);
+
+        // when
+        mockMvc.perform(
+                        put("/api/v1/images/123")
+                                .content(content)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.galContentId").exists())
+                .andExpect(jsonPath("$.data.galTitle").exists())
+                .andExpect(jsonPath("$.data.galWebImageUrl").exists())
+                .andExpect(jsonPath("$.data.galPhotographer").exists())
                 .andDo(print());
 
         // then

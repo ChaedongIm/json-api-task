@@ -43,8 +43,8 @@ public class ImageResponseDto {
         this.galContentTypeId = image.getContentTypeId();
         this.galTitle = image.getTitle();
         this.galWebImageUrl = image.getImageUrl();
-        this.galCreatedtime = image.getImageUrl();
-        this.galModifiedtime = image.getImageUrl();
+        this.galCreatedtime = image.getCreatedTime();
+        this.galModifiedtime = image.getModifiedTime();
         this.galPhotographyMonth = image.getPhotographyMonth();
         this.galPhotographyLocation = image.getPhotographyLocation();
         this.galPhotographer = image.getPhotographer();
