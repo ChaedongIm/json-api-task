@@ -1,13 +1,11 @@
 package com.vv.task.images.model;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-
+@Getter
 @NoArgsConstructor
 @Entity(name = "images")
 public class Image {
@@ -15,6 +13,7 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private Long contentId;
 
     private Long contentTypeId;
