@@ -7,6 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
+
 @RequiredArgsConstructor
 @Service
 public class ImageService {
@@ -19,8 +21,10 @@ public class ImageService {
     }
 
     @Transactional(readOnly = true)
-    public ImageResponseDto findByImageId() {
-        return null;
+    public ImageResponseDto findByGalContentId(Long galContentId) {
+        return ImageResponseDto.from(
+                imageRepository.findByContentId(galContentId)
+                        .orElseThrow(EntityNotFoundException::new));
     }
 
     @Transactional

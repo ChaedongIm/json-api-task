@@ -1,5 +1,6 @@
 package com.vv.task.images.model;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -27,6 +28,15 @@ public class ImageResponseDto {
     private String galPhotographer;
 
     private String galSearchKeyword;
+
+
+    @Builder
+    public ImageResponseDto(Long galContentId, String galTitle, String galPhotographer, String galWebImageUrl) {
+        this.galContentId = galContentId;
+        this.galTitle = galTitle;
+        this.galPhotographer = galPhotographer;
+        this.galWebImageUrl = galWebImageUrl;
+    }
 
     private ImageResponseDto(Image image) {
         this.galContentId = image.getContentId();
