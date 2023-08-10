@@ -3,8 +3,11 @@
 - 환경 : spring-boot, jpa, mysql
 - 기능
     - [x] json 데이터를 50개 이상 수집하여 로컬 db에 저장
-    - [ ] 해당 데이터(모델)에 대한 REST API 를 제공하는 서버 구축
+    - [x] 해당 데이터(모델)에 대한 REST API 를 제공하는 서버 구축
     - [ ] 전반적인 REST API 동작을 체크할 수 있는 테스트 소스 구현
+        - [x] Controller Test
+        - [ ] Service Test
+        - [ ] Domain Test
     - [ ] (선택) jpa specification 기반의 확장 용이한 검색 등 임의의 추가 기능
 
 ## 구현 중 만난 문제, 해결
@@ -57,6 +60,8 @@
 - 확인 결과 Jackson 라이브러리 내에 JsonNode라는 클래스가 있었고, `jsonNode.get(key).get(key);`와 같이 getter를 사용할 수 있었다.
 - 얻어진 배열 형태의 items를 `iterator();`로 만들어 saveAll() 해주었다.
 
+> 소스 위치 : images/ImageService.java
+
 ```
 private List<Image> getImagesFromResponse(ResponseEntity<JsonNode> response) {
     List<Image> images = new ArrayList<>();
@@ -79,5 +84,3 @@ private List<Image> getImagesFromResponse(ResponseEntity<JsonNode> response) {
     }
 }
 ```
-
-> 소스 위치 : images/ImageService.java
