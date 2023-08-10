@@ -48,7 +48,7 @@ class ImageControllerTest {
             .build();
 
     @Test
-    void 컨텐트아이디로_이미지DTO를_겟한다() throws Exception {
+    void Image_READ_ContentId를_넣으면_ImageDTO_리턴() throws Exception {
         // given
         given(imageService.findByGalContentId(any()))
                 .willReturn(responseDto);
@@ -68,7 +68,7 @@ class ImageControllerTest {
     }
 
     @Test
-    void RequestDto를_받아서_이미지를_저장하면_ResponseDto가_나온다() throws Exception {
+    void Image_CREATE_RequestDto를_받아_이미지를_저장하면_ResponseDto_리턴() throws Exception {
         // given
         given(imageService.create(any())).willReturn(responseDto);
         Gson gson = new Gson();
@@ -91,7 +91,7 @@ class ImageControllerTest {
     }
 
     @Test
-    void CREATE시_밸리데이션_테스트() throws Exception {
+    void Image_CREATE_밸리데이션_테스트() throws Exception {
         // given
         given(imageService.create(any())).willReturn(responseDto);
 
@@ -111,7 +111,7 @@ class ImageControllerTest {
     }
 
     @Test
-    void RequestDto를_받아_이미지를_수정하면_ResponseDto가_나온다() throws Exception {
+    void Image_UPDATE_contentId와_RequestDto를_받아_이미지_수정테스트() throws Exception {
         // given
         given(imageService.update(any(), any())).willReturn(responseDto);
 
@@ -132,5 +132,21 @@ class ImageControllerTest {
                 .andDo(print());
 
         // then
+    }
+
+    @Test
+    void Image_DELETE_삭제_성공시_contentId_리턴() throws Exception {
+        // given
+        given(imageService.delete(123L)).willReturn(123L);
+
+        // when
+        mockMvc.perform(
+                        delete("/api/v1/images/123"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data").exists())
+                .andDo(print());
+
+        // then
+        verify(imageService).delete(123L);
     }
 }

@@ -35,4 +35,8 @@ public class ImageController {
         return CommonResponse.success(imageService.update(galContentId, requestDto));
     }
 
+    @DeleteMapping("/api/v1/images/{galContentId}")
+    public CommonResponse<?> deleteImage(@PathVariable Long galContentId) {
+        return CommonResponse.success("삭제 성공 ContendId = " + imageService.delete(galContentId));
+    }
 }

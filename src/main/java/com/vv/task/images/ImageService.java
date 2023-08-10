@@ -49,6 +49,9 @@ public class ImageService {
     }
 
     @Transactional
-    public void delete() {
+    public Long delete(Long contentId) {
+        imageRepository.delete(imageRepository.findByContentId(contentId)
+                .orElseThrow(EntityNotFoundException::new));
+        return contentId;
     }
 }
