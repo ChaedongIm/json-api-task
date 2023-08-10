@@ -32,7 +32,7 @@ public class ImageController {
     @PutMapping("/api/v1/images/{galContentId}")
     public CommonResponse<?> updateImage(@PathVariable Long galContentId,
                                          @Validated @RequestBody ImageRequestDto requestDto) {
-        return CommonResponse.success(imageService.update(requestDto));
+        return CommonResponse.success(imageService.update(galContentId, requestDto));
     }
 
 }

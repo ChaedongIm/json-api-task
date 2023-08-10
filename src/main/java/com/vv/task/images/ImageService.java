@@ -41,10 +41,9 @@ public class ImageService {
     }
 
     @Transactional
-    public ImageResponseDto update(ImageRequestDto requestDto) {
-        Image image = imageRepository.findByContentId(requestDto.getGalContentId())
+    public ImageResponseDto update(Long contentId, ImageRequestDto requestDto) {
+        Image image = imageRepository.findByContentId(contentId)
                 .orElseThrow(EntityNotFoundException::new);
-        System.out.println("image = " + image);
 
         return ImageResponseDto.from(image.update(requestDto));
     }

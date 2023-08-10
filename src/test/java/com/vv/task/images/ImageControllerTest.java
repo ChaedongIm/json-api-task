@@ -113,7 +113,7 @@ class ImageControllerTest {
     @Test
     void RequestDto를_받아_이미지를_수정하면_ResponseDto가_나온다() throws Exception {
         // given
-        given(imageService.update(any())).willReturn(responseDto);
+        given(imageService.update(any(), any())).willReturn(responseDto);
 
         Gson gson = new Gson();
         String content = gson.toJson(requestDto);
