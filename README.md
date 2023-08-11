@@ -24,13 +24,13 @@
 
 ### 1. Java에서 Json 핸들링..?
 
-- Model이 정해지지 않은 상황에서 Json을 핸들링 필요
+- Model이 정해지지 않은 상황에서 Json 핸들링 필요
 - 해결 방법은 3가지 정도라 생각했습니다.
     - 첫째, response 모델 객체를 만든다.
     - 둘째, data.response.items 와 같은 getter가 지원되는 방식이 있는지 찾아본다.
     - 셋째, 파싱 라이브러리가 있을 것 같다.
 
-```
+```json
 // json 예시
 {
   "response": {
@@ -72,7 +72,7 @@
 
 > 소스 위치 : images/ImageService.java
 
-```
+```java
 private List<Image> getImagesFromResponse(ResponseEntity<JsonNode> response) {
     List<Image> images = new ArrayList<>();
     response.getBody()
