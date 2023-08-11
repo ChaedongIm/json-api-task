@@ -1,10 +1,20 @@
+## 구동 방법
+
+> IDE:  Intellij
+
+1. git clone 또는 zip 파일 해제
+2. 첨부파일 `src/main/resources` 경로의 `application-apikey.properties`,`application-db.properties`를 복사 붙여넣기 해주세요.
+3. `application-db.properties` 에서 환경에 맞게 db 세팅  (url, username, password)
+4. IDE 에서 프로젝트를 실행해주시고 `http://localhost:9090/swagger-ui/#/` -> open-api-controller GET 통신을 실행해주세요.
+5. 이후 swagger를 통해 확인하시면 CRUD 동작 가능합니다.
+
 ## 요구사항
 
 - 환경 : spring-boot, jpa, mysql
 - 기능
     - [x] json 데이터를 50개 이상 수집하여 로컬 db에 저장
     - [x] 해당 데이터(모델)에 대한 REST API 를 제공하는 서버 구축
-    - [ ] 전반적인 REST API 동작을 체크할 수 있는 테스트 소스 구현
+    - [x] 전반적인 REST API 동작을 체크할 수 있는 테스트 소스 구현
         - [x] Controller Test
         - [x] Service Test
         - [x] Domain Test

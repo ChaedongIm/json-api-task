@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-public class OpenAipController {
+public class OpenApiController {
 
     private final OpenApiService openApiService;
 
     @GetMapping("/api/v1/open-api/list")
-    public CommonResponse<Object> getListFromOpenApi() {
+    public CommonResponse<?> getListFromOpenApi() {
         return CommonResponse.success(openApiService.getImageListFromOpenApi());
     }
 }
